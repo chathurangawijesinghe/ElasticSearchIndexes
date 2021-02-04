@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model IEnumerable<Nest.CatIndicesRecord>
+@model IEnumerable<ElasticSearchIndexes.Models.ElasticSqlDataCounts>
 
 <h2>Elastic & SQL Index Counts</h2>
 
@@ -10,24 +10,36 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Index)
+                @Html.DisplayNameFor(model => model.IndexName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DocsCount)
+                @Html.DisplayNameFor(model => model.ViewName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IndexCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ViewCount)
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Index)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DocsCount)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndexName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndexCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewCount)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

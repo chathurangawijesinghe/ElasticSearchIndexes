@@ -8,31 +8,27 @@ using Microsoft.Extensions.Logging;
 using ElasticSearchIndexes.Models;
 using Nest;
 using Elasticsearch.Net;
+using ElasticSearchIndexes.Data;
 
 namespace ElasticSearchIndexes.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IElasticIndexData _elasticIndexData;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+                                IElasticIndexData elasticIndexData)
         {
             _logger = logger;
+            _elasticIndexData = elasticIndexData;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var uri = new Uri("http://localhost:9200");
-            var settings = new ConnectionConfiguration(uri);
-            var client = new ElasticClient(uri);
-            var searchResponse = await client.Cat.IndicesAsync();
+            var data = _elasticIndexData.Get();
 
-            if (searchResponse.IsValid)
-            {
-                return View(searchResponse.Records);
-            }
-
-            return View();
+            return View(data);
         }
 
         public IActionResult Privacy()
